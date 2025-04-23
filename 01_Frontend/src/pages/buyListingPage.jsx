@@ -1,7 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // <-- import this
 import styles from '../BuyListingPage.module.css';
 
 export default function BuyListingPage() {
+  const navigate = useNavigate(); // <-- create the navigate function
   const dummyItems = new Array(12).fill({
     name: "Name Of Keyboard",
     price: "Price",
@@ -29,7 +31,13 @@ export default function BuyListingPage() {
               <span>{item.name}</span>
               <span className={styles.price}>{item.price}</span>
             </div>
-            <button className={styles.addButton}>Add To Cart</button>
+            <button 
+             className={styles.addButton} 
+             onClick={() => navigate('/checkout')}
+             >
+              Purchase
+             
+            </button>
           </div>
         ))}
       </div>
