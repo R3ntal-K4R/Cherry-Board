@@ -5,6 +5,7 @@ import BuyListingPage from "./pages/buyListingPage"
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import Landing from './pages/landing'
 import Home from './pages/home'
+import CheckoutPage from './pages/Checkout';
 
 
 function App() {
@@ -13,9 +14,10 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/listing" element={<BuyListingPage />} />
         <Route path="/landing" element={<Landing />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
       
         
       </Routes>
