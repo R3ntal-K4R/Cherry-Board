@@ -5,6 +5,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user, UserMixin
 from flask_bcrypt import Bcrypt
 import pyodbc
+from datetime import datetime
+
+
 
 # Create the Flask app
 app = Flask(__name__)
@@ -76,7 +79,29 @@ class SubmitOrder(Resource):
     @login_required
     def post(self):
         data = request.get_json()
-        return {"message": "Order submitted successfully!"}, 201
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        
+        # Insert a new order
+        cursor.execute("""
+        INSERT INTO Orders (CustomerID, TotalAmount, OrderStatusID, CreatedAt, UpdatedAt)
+        VALUES (?, ?, ?, ?, ?)
+        """, data['CustomerID'], data['TotalAmount'], data['OrderStatusID'], datetime.datetime.now(), datetime.datetime.now())
+
+        # Get the OrderID of the newly inserted order
+        cursor.execute("SELECT @@IDENTITY AS OrderID")
+        order_id = cursor.fetchone()[0]
+
+        # Insert order items
+        for item in data['OrderItems']:
+            cursor.execute("""
+                INSERT INTO OrderItem (OrderID, ProductID, Quantity)
+                VALUES (?, ?, ?)
+            """, order_id, item['ProductID'], item['Quantity'])
+
+        # Commit the transaction
+        conn.commit()
+        return jsonify({"message": "Order submitted successfully!"}), 201
 
 class LoadOrder(Resource):
     @login_required
