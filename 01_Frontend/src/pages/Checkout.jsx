@@ -1,6 +1,10 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
+
 
 export default function CheckoutPage() {
+  const navigate = useNavigate();
+
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#fef2f2", display: "flex", justifyContent: "center", alignItems: "center", padding: "2rem" }}>
       <div style={{ width: "100%", maxWidth: "600px", backgroundColor: "#fff", borderRadius: "1rem", boxShadow: "0 10px 20px rgba(0,0,0,0.1)", padding: "2rem" }}>
@@ -34,7 +38,9 @@ export default function CheckoutPage() {
               <input id="cvc" type="text" placeholder="123" style={inputStyle} />
             </div>
           </div>
-          <button type="submit" style={{ backgroundColor: "#dc2626", color: "white", padding: "0.75rem", border: "none", borderRadius: "0.5rem", fontWeight: "bold", cursor: "pointer" }}>
+          <button type="button"
+           onClick={() => navigate('/thankyou')} 
+           style={{ backgroundColor: "#dc2626", color: "white", padding: "0.75rem", border: "none", borderRadius: "0.5rem", fontWeight: "bold", cursor: "pointer" }}>
             Place Order
           </button>
         </form>
