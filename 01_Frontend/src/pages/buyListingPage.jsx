@@ -29,7 +29,7 @@ export default function BuyListingPage() {
               <span>{item.name}</span>
               <span className={styles.price}>{item.price}</span>
             </div>
-            <button className={styles.addButton}>Add To Cart</button>
+            <button className={styles.addButton}>Purchase</button>
           </div>
         ))}
       </div>

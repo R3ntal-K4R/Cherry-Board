@@ -1,7 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // <-- import this
 import styles from '../Landing.module.css';
 
 export default function Landing() {
+  const navigate = useNavigate(); // <-- create the navigate function
+
   return (
     <div className={styles.landingPage}>
       <header className={styles.header}>
@@ -17,7 +20,12 @@ export default function Landing() {
           <h1>
             Keyboards Designed For <span className={styles.highlight}>You</span>
           </h1>
-          <button className={styles.getStarted}>Get started</button>
+          <button 
+            className={styles.getStarted} 
+            onClick={() => navigate('/listing')} // <-- redirect on click
+          >
+            Get started
+          </button>
         </section>
 
         <section className={styles.keyboardImage}>
