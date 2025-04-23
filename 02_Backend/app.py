@@ -2,7 +2,7 @@
 from flask import Flask, jsonify
 from flask_restful import Resource, Api, request
 import pyodbc
-import datetime
+from datetime import datetime
 
 
 
@@ -35,12 +35,14 @@ class Login(Resource):
 class SubmitOrder(Resource):
     def post(self):
         data = request.get_json()
-
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        
         # Insert a new order
         cursor.execute("""
         INSERT INTO Orders (CustomerID, TotalAmount, OrderStatusID, CreatedAt, UpdatedAt)
         VALUES (?, ?, ?, ?, ?)
-        """, data['CustomerID'], data['TotalAmount'], data['OrderStatusID'], datetime.datetime.utcnow(), datetime.datetime.utcnow())
+        """, data['CustomerID'], data['TotalAmount'], data['OrderStatusID'], datetime.datetime.now(), datetime.datetime.now())
 
         # Get the OrderID of the newly inserted order
         cursor.execute("SELECT @@IDENTITY AS OrderID")
@@ -55,9 +57,7 @@ class SubmitOrder(Resource):
 
         # Commit the transaction
         conn.commit()
-
         return jsonify({"message": "Order submitted successfully!"}), 201
-
 
 class LoadOrder(Resource):
     def get(self):
