@@ -4,7 +4,7 @@ import viteLogo from '/vite.svg'
 import BuyListingPage from "./pages/buyListingPage"
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import Landing from './pages/landing'
-import Home from './pages/home'
+import Home from './pages/Home'
 import CheckoutPage from './pages/Checkout';
 import ThankYouPage from './pages/Thankyou';
 
